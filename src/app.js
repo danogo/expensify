@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 
@@ -28,14 +28,24 @@ const HelpPage = () => (
   </div>
 );
 
+const NotFoundPage = () => (
+  <div>
+    404!
+  </div>
+);
+
 const routes = (
+  // Router expects to have either 0 or 1 children
+  // Switch renders component for first match and doesnt go through the rest of routes to check if they match, so we get our 404 page only if none of the previous routes match
+  // exact forces the exact match, so paths which only start with slash won't match
   <Router>
-    <div>
-      <Route path='/' exact component={ExpenseDashboardPage}/>
+    <Switch>
+      <Route path='/' exact component={ExpenseDashboardPage} />
       <Route path='/create' component={AddExpensePage} />
       <Route path='/edit' component={EditExpensePage} />
       <Route path='/help' component={HelpPage} />
-    </div>
+      <Route component={NotFoundPage} />
+    </Switch>
   </Router>
 );
 
