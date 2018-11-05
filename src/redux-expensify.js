@@ -42,9 +42,30 @@ const setTextFilter = (text = '') => (
   }
 );
 // SORT_BY_DATE
+const sortByDate = () => (
+  {
+    type: 'SORT_BY_DATE'
+  }
+);
 // SORT_BY_AMOUNT
+
+const sortByAmount = () => (
+  {
+    type: 'SORT_BY_AMOUNT'
+  }
+);
+
 // SET_START_DATE
+const setStartDate = (date) => ({
+  type: 'SET_START_DATE',
+  date
+});
+
 // SET_END_DATE
+const setEndDate = (date) => ({
+  type: 'SET_END_DATE',
+  date
+});
 
 // Reducers
 const expensesReducerDefaultState = [];
@@ -73,6 +94,14 @@ const filtersReducer = (state = filtersReducerDefaultState, action) => {
   switch(action.type) {
     case 'SET_TEXT_FILTER':
       return {...state, text: action.text};
+    case 'SORT_BY_DATE':
+      return {...state, sortBy: 'date'};
+    case 'SORT_BY_AMOUNT':
+      return {...state, sortBy: 'amount'};
+    case 'SET_START_DATE':
+      return {...state, startDate: action.date};
+    case 'SET_END_DATE':
+      return {...state, endDate: action.date};
     default:
       return state;
   }
@@ -82,20 +111,38 @@ const rootReducer = combineReducers({
   expenses: expensesReducer, 
   filters: filtersReducer
 });
+
 const store = createStore(rootReducer);
+
+const getVisibleExpenses = (expenses, {text, sortBy, startDate, endDate}) => {
+  return expenses.filter(expense => {
+    const matchesStartDate = typeof startDate !== 'number' || startDate >= expense.createdAt; 
+    const matchesEndDate = typeof endDate !== 'number' || endDate <= expense.createdAt;
+    const matchesText = expense.description.toLowerCase().includes(text.toLowerCase());
+    // is filtered in if returns true
+    return matchesStartDate && matchesEndDate && matchesText;
+  })
+};
 
 // run this function everytime actions is dispatched and state changes
 store.subscribe(() => {
-  console.log(store.getState());
+  const state =  store.getState();
+  const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
+  console.log('visibleExpenses: ', visibleExpenses);
 });
 // Dispatch returns action object we have dispatched, so we can save it and use it later
-const expenseOne = store.dispatch(addExpense({description: 'my bills', amount: 400}));
-const expenseTwo = store.dispatch(addExpense({description: 'witcher game', amount: 9000}));
-console.log('expenseOne', expenseOne);
-store.dispatch(removeExpense({id: expenseOne.expense.id}));
-store.dispatch(editExpense(expenseTwo.expense.id, {amount: 1337}));
+const expenseOne = store.dispatch(addExpense({description: 'food', amount: 400, createdAt: 250}));
+const expenseTwo = store.dispatch(addExpense({description: 'Rent', amount: 9000, createdAt: 100}));
+// console.log('expenseOne', expenseOne);
+// store.dispatch(removeExpense({id: expenseOne.expense.id}));
+// store.dispatch(editExpense(expenseTwo.expense.id, {amount: 1337}));
 store.dispatch(setTextFilter('rent'));
-store.dispatch(setTextFilter());
+// store.dispatch(setTextFilter());
+// store.dispatch(sortByAmount());
+// store.dispatch(sortByDate());
+// store.dispatch(setStartDate(125));
+// store.dispatch(setStartDate());
+// store.dispatch(setEndDate(4900));
 
 const demoState = {
   expenses: [
@@ -115,14 +162,3 @@ const demoState = {
   }
 };
 
-const user = {
-  name: 'Ciri',
-  age: 50
-};
-
-const user2 = Object.assign({}, user, {name: 'Bob'});
-const user3 = { ...user, age: 15};
-console.log('============= Spread Operator =================');
-console.log('user: ', user);
-console.log('user2: ', user2);
-console.log('user3: ', user3);
