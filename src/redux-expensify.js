@@ -121,24 +121,31 @@ const getVisibleExpenses = (expenses, {text, sortBy, startDate, endDate}) => {
     const matchesText = expense.description.toLowerCase().includes(text.toLowerCase());
     // is filtered in if returns true
     return matchesStartDate && matchesEndDate && matchesText;
-  })
+  }).sort((a, b) => {
+    if (sortBy === 'date') {
+      return b.createdAt - a.createdAt;
+    } else if (sortBy === 'amount') {
+      return b.amount - a.amount;
+    } 
+  });
 };
 
 // run this function everytime actions is dispatched and state changes
 store.subscribe(() => {
   const state =  store.getState();
+  console.log(state)
   const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
   console.log('visibleExpenses: ', visibleExpenses);
 });
 // Dispatch returns action object we have dispatched, so we can save it and use it later
-const expenseOne = store.dispatch(addExpense({description: 'food', amount: 400, createdAt: 250}));
-const expenseTwo = store.dispatch(addExpense({description: 'Rent', amount: 9000, createdAt: 100}));
+const expenseOne = store.dispatch(addExpense({description: 'food', amount: 1400, createdAt: 250}));
+const expenseTwo = store.dispatch(addExpense({description: 'Rent', amount: 1000, createdAt: 6100}));
 // console.log('expenseOne', expenseOne);
 // store.dispatch(removeExpense({id: expenseOne.expense.id}));
 // store.dispatch(editExpense(expenseTwo.expense.id, {amount: 1337}));
-store.dispatch(setTextFilter('rent'));
+// store.dispatch(setTextFilter('rent'));
 // store.dispatch(setTextFilter());
-// store.dispatch(sortByAmount());
+store.dispatch(sortByAmount());
 // store.dispatch(sortByDate());
 // store.dispatch(setStartDate(125));
 // store.dispatch(setStartDate());
