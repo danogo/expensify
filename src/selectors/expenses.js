@@ -1,11 +1,11 @@
 // Selectors are functions that query our data from store
 
-export const getVisibleExpenses = (expenses, {text, sortBy, startDate, endDate}) => {
+const getVisibleExpenses = (expenses, {text, sortBy, startDate, endDate}) => {
   return expenses.filter(expense => {
     const matchesStartDate = typeof startDate !== 'number' || startDate >= expense.createdAt; 
     const matchesEndDate = typeof endDate !== 'number' || endDate <= expense.createdAt;
     const matchesText = expense.description.toLowerCase().includes(text.toLowerCase());
-    // is filtered in if returns true
+    // is filtered out if returns false
     return matchesStartDate && matchesEndDate && matchesText;
   }).sort((a, b) => {
     if (sortBy === 'date') {
@@ -15,3 +15,5 @@ export const getVisibleExpenses = (expenses, {text, sortBy, startDate, endDate})
     } 
   });
 };
+
+export default getVisibleExpenses;
