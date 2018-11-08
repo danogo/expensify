@@ -13,6 +13,5 @@ const ExpenseListItem = ({description, amount, createdAt, dispatch, id}) => (
   </div>
 );
 
-
 // here we connect just to get dispatch method to our WrappedComponent props
 export default connect()(ExpenseListItem);
