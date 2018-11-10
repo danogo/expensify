@@ -1,17 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { removeExpense } from '../actions/expenses';
+import { Link } from 'react-router-dom';
 
-const ExpenseListItem = ({description, amount, createdAt, dispatch, id}) => (
+const ExpenseListItem = ({description, amount, createdAt, id}) => (
   <div>
-    <h3>{description}</h3>
+    <Link to={`/edit/${id}`}><h3>{description}</h3></Link>
     <p>Amount: {amount}</p>
     <p>Created at: {createdAt}</p>
-    <button onClick={(e) => {
-      dispatch(removeExpense({id}));
-    }}>Remove</button>
   </div>
 );
 
 // here we connect just to get dispatch method to our WrappedComponent props
-export default connect()(ExpenseListItem);
+export default ExpenseListItem;
