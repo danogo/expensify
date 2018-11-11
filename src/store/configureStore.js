@@ -10,6 +10,7 @@ export default () => {
     filters: filtersReducer
   });
 
-  const store = createStore(rootReducer);
+  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() as second arg allows to use redux dev tools
+  const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
   return store;
 }

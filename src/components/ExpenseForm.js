@@ -4,10 +4,12 @@ import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 
+// expense form is reused in AddExpensePage and EditExpensePage
 export default class ExpenseForm extends Component {
   // can't use this.props within class property state, state has to be inside constructor to use props
   constructor(props) {
     super(props);
+    // props.expense ? editing expense : creating new expense
     this.state = {
       description: props.expense ? props.expense.description : '',
       amount: props.expense ? (props.expense.amount / 100).toString() : '',

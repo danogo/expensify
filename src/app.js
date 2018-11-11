@@ -11,8 +11,8 @@ import './styles/styles.scss';
 
 const store = configureStore();
 store.dispatch(addExpense({description: 'Water bill', amount: 1000}));
-store.dispatch(addExpense({description: 'Gas rent', amount: 2500, createdAt: 2000}));
-store.dispatch(addExpense({description: 'Books', amount: 40, createdAt: 13000}));
+store.dispatch(addExpense({description: 'Gas rent', amount: 2500, createdAt: 1543575600023}));
+store.dispatch(addExpense({description: 'Books', amount: 40, createdAt: 1543575600003}));
 
 const jsx = (
   <Provider store={store}>
