@@ -18,7 +18,6 @@ export default class ExpenseForm extends Component {
       calendarFocused: false,
       error: ''
     }
-    console.log(props)
   }
 
   handleDescriptionChange = e => {
