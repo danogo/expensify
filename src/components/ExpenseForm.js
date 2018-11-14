@@ -57,7 +57,7 @@ export default class ExpenseForm extends Component {
       // valueOf to get timestamp in milliseconds from moment object
       this.props.onSubmit({
         description: this.state.description,
-        amount: parseFloat(this.state.amount, 10) * 100,
+        amount: Math.round(parseFloat(this.state.amount, 10) * 100),
         note: this.state.note,
         createdAt: this.state.createdAt.valueOf()
       })
