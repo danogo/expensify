@@ -14,9 +14,6 @@ export class ExpenseListFilters extends Component {
     this.props.setStartDate(startDate);
     this.props.setEndDate(endDate);
   };
-  handleFocusChange = calendarFocused => {
-    this.setState(() => ({ calendarFocused }))
-  };
   handleTextChange = e => {
     this.props.setTextFilter(e.target.value);
   };
@@ -26,6 +23,9 @@ export class ExpenseListFilters extends Component {
     } else if (e.target.value === 'amount') {
       this.props.sortByAmount();
     }
+  };
+  handleFocusChange = calendarFocused => {
+    this.setState(() => ({ calendarFocused }))
   };
   render() {
     return (
