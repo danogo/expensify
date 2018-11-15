@@ -9,9 +9,9 @@ export class EditExpensePage extends Component {
     this.props.history.push('/');
   }
 
-  handleClick = () => {
+  handleRemove = () => {
     this.props.removeExpense(this.props.expense.id);
-    this.props.history.psuh('/');
+    this.props.history.push('/');
   }
 
   render() {
@@ -21,7 +21,7 @@ export class EditExpensePage extends Component {
         expense={this.props.expense}
         onSubmit={this.handleSubmit}
       />
-      <button onClick={this.handleClick}>Remove</button>
+      <button onClick={this.handleRemove}>Remove</button>
     </div>
     );
   }
@@ -34,7 +34,7 @@ const mapStateToProps = (state, props) => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, props) => {
   return {
     editExpense: (id, expense) => dispatch(editExpense(id, expense)),
     removeExpense: id => dispatch(removeExpense(id))
