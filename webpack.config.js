@@ -1,6 +1,7 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin'); //installed via npm
 
-module.exports = {
+const config = {
   // entry point for webpack
   entry: './src/app.js',
   // plac where it give us bundled file
@@ -38,5 +39,17 @@ module.exports = {
       }
     ]
   },
-  devtool: 'cheap-module-eval-source-map'
+  devtool: 'cheap-module-eval-source-map',
+  plugins: [
+    new HtmlWebpackPlugin({template: './src/assets/index.html'})
+  ]
 };
+
+module.exports = (env, argv) => {
+  const isProduction = argv.mode === 'production';
+
+  if (isProduction) {
+    config.devtool = 'source-map';
+  }
+  return config;
+}

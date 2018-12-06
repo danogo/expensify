@@ -10,6 +10,8 @@ import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
 
+console.log('test');
+
 const store = configureStore();
 store.dispatch(addExpense({description: 'Water bill', amount: 1000}));
 store.dispatch(addExpense({description: 'Gas rent', amount: 2500, createdAt: 1543575600023}));
